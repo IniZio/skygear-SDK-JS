@@ -122,6 +122,20 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
         </div>
+
+        <!-- Logout -->
+        <div class="section section-logout">
+          <h2>Logout</h2>
+
+          <div id="logout">
+            <pre><code>logout()</code></pre>
+            <div>
+              <button class="btn btn-primary mb-2" onclick="logout()">Logout</button>
+            </div>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+        </div>
       </div>
       <div class="col-sm-3">
       </div>
@@ -242,6 +256,19 @@
       var newPassword = demo.querySelector('#newPassword').value
 
       return skygear.auth.changePassword(oldPassword, newPassword)
+        .then(function() {
+          terminal.value = 'Success'
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
+    function logout() {
+      var demo = document.getElementById('logout')
+      var terminal = demo.querySelector('#terminal')
+
+      return skygear.auth.logout()
         .then(function() {
           terminal.value = 'Success'
         })
