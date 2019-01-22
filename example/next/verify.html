@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous"
+  >
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link rel="stylesheet" href="example.css">
+  <title>Skygear-SDK-JS examples</title>
+</head>
+
+<body>
+  <div class="container my-3" style="max-width: 850px">
+    <div class="row">
+      <div class="col-sm-9">
+        <div id="current-info"></div>
+
+        <!-- Login -->
+        <div class="section section-verify">
+          <h2>Request for Verification</h2>
+
+          <div id="requestVerification">
+            <pre><code>requestVerification(method)</code></pre>
+
+            <div>
+              <button class="btn btn-primary mb-2" onclick="requestVerification('email')">Email</button>
+              <button class="btn btn-primary mb-2" onclick="requestVerification('phone')">Phone</button>
+            </div>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+
+          <div id="verifyUserWithCode">
+            <pre><code>verifyUserWithCode(code)</code></pre>
+
+            <form class="form-inline" onsubmit="event.preventDefault(); verifyUserWithCode()">
+              <div class="form-group mb-2">
+                <label for="code" class="sr-only">Code</label>
+                <input type="text" class="form-control" id="code" placeholder="code" required>
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Verify</button>
+            </form>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+      </div>
+      <div class="col-sm-3">
+      </div>
+    </div>
+  </div>
+
+  <script src="/bundle.js"></script> <!-- Skygear -->
+  <script src="current-info.js"></script> <!-- Display current Info -->
+  <script>
+    skygear.config({
+      endPoint: '{{ SKYGEAR_ENDPOINT }}',
+      apiKey: '{{ SKYGEAR_API_KEY }}'
+    }).then(function(container) {
+      console.log('Skygear successfully configured')
+      initCurrentInfo()
+    }, function(err) {
+      console.error(err);
+    })
+  </script>
+
+  <script>
+    function requestVerification(method) {
+      var demo = document.getElementById('requestVerification')
+      var terminal = demo.querySelector('#terminal')
+
+      skygear.auth.requestVerification(method)
+        .then(function() {
+          terminal.value = 'Success :)'
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
+    function verifyUserWithCode() {
+      var demo = document.getElementById('verifyUserWithCode')
+      var terminal = demo.querySelector('#terminal')
+
+      var code = demo.querySelector('#code').value
+
+      skygear.auth.verifyUserWithCode(code)
+        .then(function(user) {
+          if (user.length ==  0) {
+            terminal.value = 'No user found';
+            return
+          }
+
+          terminal.value = JSON.stringify(user, null, 2)
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+  </script>
+</body>
+
+</html>
