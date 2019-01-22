@@ -63,6 +63,65 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
         </div>
+
+        <div class="section section-password">
+          <h2>Password</h2>
+
+          <div id="forgotPassword">
+            <pre><code>forgotPassword(email)</code></pre>
+            <form class="form-inline" onsubmit="event.preventDefault(); forgotPassword()">
+              <div class="form-group mb-2 mr-2">
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" required>
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Forgot password</button>
+            </form>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+
+          <div id="resetPassword">
+            <pre><code>resetPassword(userID, code, expireAt, newPassword)</code></pre>
+            <form class="form-inline" onsubmit="event.preventDefault(); resetPassword()">
+              <div class="form-group mb-2 mr-2">
+                <label for="userID" class="sr-only">User ID</label>
+                <input type="text" class="form-control" id="userID" placeholder="User ID" required>
+              </div>
+              <div class="form-group mb-2 mr-2">
+                <label for="code" class="sr-only">Code</label>
+                <input type="text" class="form-control" id="code" placeholder="Code" required>
+              </div>
+              <div class="form-group mb-2 mr-2">
+                <label for="expireAt" class="sr-only">Expire At</label>
+                <input type="text" class="form-control" id="expireAt" placeholder="Expire At" required>
+              </div>
+              <div class="form-group mb-2 mr-2">
+                <label for="newPassword" class="sr-only">New Password</label>
+                <input type="password" class="form-control" id="newPassword" placeholder="New Password" required>
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Reset password</button>
+            </form>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+
+          <div id="changePassword">
+            <pre><code>changePassword(oldPassword, newPassword)</code></pre>
+            <form class="form-inline" onsubmit="event.preventDefault(); changePassword()">
+              <div class="form-group mb-2 mr-2">
+                <label for="oldPassword" class="sr-only">Old Password</label>
+                <input type="password" class="form-control" id="oldPassword" placeholder="Old Password" required>
+              </div>
+              <div class="form-group mb-2 mr-2">
+                <label for="newPassword" class="sr-only">New Password</label>
+                <input type="password" class="form-control" id="newPassword" placeholder="New Password" required>
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Change password</button>
+            </form>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+        </div>
       </div>
       <div class="col-sm-3">
       </div>
@@ -136,6 +195,55 @@
           }
 
           terminal.value = JSON.stringify(users[0].toJSON(), null, 4)
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
+    function forgotPassword() {
+      var demo = document.getElementById('forgotPassword')
+      var terminal = demo.querySelector('#terminal')
+
+      var email = demo.querySelector('#email').value
+
+      return skygear.auth.forgotPassword(email)
+        .then(function() {
+          terminal.value = 'Success'
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
+    function resetPassword() {
+      var demo = document.getElementById('resetPassword')
+      var terminal = demo.querySelector('#terminal')
+
+      var userID = demo.querySelector('#userID').value
+      var code = demo.querySelector('#code').value
+      var expireAt = parseFloat(demo.querySelector('#expireAt').value)
+      var newPassword = demo.querySelector('#newPassword').value
+
+      return skygear.auth.resetPassword(userID, code, expireAt, newPassword)
+        .then(function() {
+          terminal.value = 'Success'
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
+    function changePassword() {
+      var demo = document.getElementById('changePassword')
+      var terminal = demo.querySelector('#terminal')
+
+      var oldPassword = demo.querySelector('#oldPassword').value
+      var newPassword = demo.querySelector('#newPassword').value
+
+      return skygear.auth.changePassword(oldPassword, newPassword)
+        .then(function() {
+          terminal.value = 'Success'
         })
         .catch(function(err) {
           terminal.value = JSON.stringify(err, null, 4)
