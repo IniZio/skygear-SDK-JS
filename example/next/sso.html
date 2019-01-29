@@ -53,6 +53,14 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
 
+          <div id="getLoginRedirectResult">
+            <pre><code>getLoginRedirectResult()</code></pre>
+            <div></div>
+            <button class="btn btn-primary mb-2" onclick="getLoginRedirectResult()">Get Link redirect result</button>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+
           <div id="loginOAuthProviderWithAccessToken">
             <pre><code>loginOAuthProviderWithAccessToken('<select id="provider" class="js-select-provider">
                   <option value="google">google</option>
@@ -95,6 +103,14 @@
             <div>
               <button class="btn btn-primary mb-2" onclick="linkOAuthProviderWithRedirect()">Link with Redirect</button>
             </div>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+
+          <div id="getLinkRedirectResult">
+            <pre><code>getLinkRedirectResult()</code></pre>
+            <div></div>
+            <button class="btn btn-primary mb-2" onclick="getLinkRedirectResult()">Get Link redirect result</button>
 
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
@@ -192,6 +208,20 @@
         })
     }
 
+    function getLoginRedirectResult() {
+      var demo = document.getElementById('getLoginRedirectResult')
+
+      var terminal = demo.querySelector('#terminal')
+
+      return skygear.auth.getLoginRedirectResult()
+        .then(function (res) {
+          terminal.value = JSON.stringify(res, null, 4)
+        })
+        .catch(function (err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
     function loginOAuthProviderWithAccessToken() {
       var demo = document.getElementById('loginOAuthProviderWithAccessToken')
       var terminal = demo.querySelector('#terminal')
@@ -237,6 +267,20 @@
         })
     }
 
+    function getLinkRedirectResult() {
+      var demo = document.getElementById('getLinkRedirectResult')
+
+      var terminal = demo.querySelector('#terminal')
+
+      return skygear.auth.getLinkRedirectResult()
+        .then(function (res) {
+          terminal.value = JSON.stringify(res, null, 4)
+        })
+        .catch(function (err) {
+          terminal.value = JSON.stringify(err, null, 4)
+        })
+    }
+
     function linkOAuthProviderWithAccessToken() {
       var demo = document.getElementById('linkOAuthProviderWithAccessToken')
       var terminal = demo.querySelector('#terminal')
@@ -269,7 +313,7 @@
     }
 
     function getOAuthProviderProfiles() {
-      var demo = document.getElementById('unlinkOAuthProvider')
+      var demo = document.getElementById('getOAuthProviderProfiles')
       var terminal = demo.querySelector('#terminal')
 
       return skygear.auth.getOAuthProviderProfiles()
