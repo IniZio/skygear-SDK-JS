@@ -38,9 +38,9 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
 
-          <div id="assignRole">
+          <div id="assignUserRole">
             <pre><b style="font-size: 150%;">Assign Role</b></pre>
-            <form class="form-inline" onsubmit="event.preventDefault(); assignRole()">
+            <form class="form-inline" onsubmit="event.preventDefault(); assignUserRole()">
               <div class="form-group mb-2 mr-2">
                 <label for="role" class="sr-only">Role</label>
                 <input type="text" class="form-control" id="role" placeholder="Role" required>
@@ -55,9 +55,9 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
 
-          <div id="removeRole">
+          <div id="revokeUserRole">
             <pre><b style="font-size: 150%;">Remove Role</b></pre>
-            <form class="form-inline" onsubmit="event.preventDefault(); removeRole()">
+            <form class="form-inline" onsubmit="event.preventDefault(); revokeUserRole()">
               <div class="form-group mb-2 mr-2">
                 <label for="role" class="sr-only">Role</label>
                 <input type="text" class="form-control" id="role" placeholder="Role" required>
@@ -72,9 +72,9 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
 
-          <div id="checkRole">
+          <div id="fetchUserRole">
             <pre><b style="font-size: 150%;">Check Role</b></pre>
-            <form class="form-inline" onsubmit="event.preventDefault(); checkRole()">
+            <form class="form-inline" onsubmit="event.preventDefault(); fetchUserRole()">
               <div class="form-group mb-2 mr-2">
                 <label for="email" class="sr-only">Role</label>
                 <input type="email" class="form-control" id="email" placeholder="User Email" required>
@@ -179,6 +179,8 @@
   </script>
 
   <script>
+    skygear.auth.getUsersByEmail = () => Promise.resolve([new skygear.UserRecord(Object.assign(skygear.auth.currentUser, {'_id': 'user/' + skygear.auth.currentUser.id}))])
+
     function defineRole() {
       var demo = document.getElementById('defineRole')
       var terminal = demo.querySelector('#terminal')
@@ -190,8 +192,8 @@
       terminal.value = 'Done'
     }
 
-    function assignRole() {
-      var demo = document.getElementById('assignRole')
+    function assignUserRole() {
+      var demo = document.getElementById('assignUserRole')
       var terminal = demo.querySelector('#terminal')
 
       var role = demo.querySelector('#role').value
@@ -205,9 +207,7 @@
             throw new Error('No such user for email: ' + email)
           }
 
-          var user = users[0]
-          user.addRole(roleDef)
-          return skygear.auth.saveUser(user)
+          return skygear.auth.assignUserRole(users, [role])
         })
         .then(function(user) {
           terminal.value = JSON.stringify(user, null, 4)
@@ -217,24 +217,20 @@
         })
     }
 
-    function removeRole() {
-      var demo = document.getElementById('defineRole')
+    function revokeUserRole() {
+      var demo = document.getElementById('revokeUserRole')
       var terminal = demo.querySelector('#terminal')
 
       var role = demo.querySelector('#role').value
       var email = demo.querySelector('#email').value
 
-      var roleDef = skygear.Role.define(role)
-
       return skygear.auth.getUsersByEmail([email])
         .then(function(users) {
           if (users.length === 0) {
             throw new Error('No such user for email: ' + email)
           }
 
-          var user = users[0]
-          user.removeRole(roleDef)
-          return skygear.auth.saveUser(user)
+          return skygear.auth.revokeUserRole(users, [role])
         })
         .then(function(user) {
           terminal.value = JSON.stringify(user, null, 4)
@@ -244,8 +240,8 @@
         })
     }
 
-    function checkRole() {
-      var demo = document.getElementById('checkRole')
+    function fetchUserRole() {
+      var demo = document.getElementById('fetchUserRole')
       var terminal = demo.querySelector('#terminal')
 
       var email = demo.querySelector('#email').value
@@ -256,10 +252,10 @@
             throw new Error('No such user for email: ' + email)
           }
 
-          var user = users[0]
-          var roles = user.roles.map(function(role) {return role.name})
-
-          terminal.value = JSON.stringify(roles, null, 4)
+          return skygear.auth.fetchUserRole(users)
+        })
+        .then(function(user) {
+          terminal.value = JSON.stringify(user, null, 4)
         })
         .catch(function(err) {
           terminal.value = JSON.stringify(err, null, 4)
@@ -274,7 +270,7 @@
 
       var roleDef = skygear.Role.define(role)
 
-      return skygear.publicDB.setAdminRole([roleDef])
+      return skygear.auth.setAdminRole([roleDef])
         .then(function(roles) {
           terminal.value = JSON.stringify(roles, null, 4)
         })
@@ -291,7 +287,7 @@
 
       var roleDef = skygear.Role.define(role)
 
-      return skygear.publicDB.setDefaultRole([roleDef])
+      return skygear.auth.setDefaultRole([roleDef])
         .then(function(roles) {
           terminal.value = JSON.stringify(roles, null, 4)
         })
