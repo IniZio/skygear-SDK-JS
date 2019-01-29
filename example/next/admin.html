@@ -43,6 +43,53 @@
             <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
           </div>
         </div>
+
+        <div class="section section-admin">
+          <h2>Admin enable/disable user</h2>
+          <b>(Requires master key)</b>
+
+          <div id="adminDisableUser">
+            <pre><code>auth.adminDisableUser(userID)</code></pre>
+            <form class="form-inline" onsubmit="event.preventDefault(); adminDisableUser()">
+              <div class="form-group mr-2 mb-2">
+                <label for="userID" class="sr-only">User ID</label>
+                <input type="text" class="form-control" id="userID" placeholder="User ID" required>
+              </div>
+              <div class="form-group mr-2 mb-2">
+                <label for="message" class="sr-only">Message</label>
+                <input type="text" class="form-control" id="message" placeholder="Message (Optional)">
+              </div>
+              <div class="form-group mr-2 mb-2">
+                <label for="expiry" class="sr-only">Expiry</label>
+                <input type="text" class="form-control" id="expiry" placeholder="Expiry (Optional)">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Disable user</button>
+            </form>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+
+          <div id="adminEnableUser">
+            <pre><code>auth.adminEnableUser(userID)</code></pre>
+            <form class="form-inline" onsubmit="event.preventDefault(); adminEnableUser()">
+              <div class="form-group mr-2 mb-2">
+                <label for="userID" class="sr-only">User ID</label>
+                <input type="text" class="form-control" id="userID" placeholder="User ID" required>
+              </div>
+              <div class="form-group mr-2 mb-2">
+                <label for="message" class="sr-only">Message</label>
+                <input type="text" class="form-control" id="message" placeholder="Message (Optional)">
+              </div>
+              <div class="form-group mr-2 mb-2">
+                <label for="expiry" class="sr-only">Expiry</label>
+                <input type="text" class="form-control" id="expiry" placeholder="Expiry (Optional)">
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Enable user</button>
+            </form>
+
+            <textarea id="terminal" class="form-control" cols="20" rows="6" readonly></textarea>
+          </div>
+        </div>
       </div>
       <div class="col-sm-3">
       </div>
@@ -76,7 +123,41 @@
           terminal.value = JSON.stringify(res, null, 4)
         })
         .catch(function(err) {
-          terminal.value = JSON.stringify(err, null, 4)
+          terminal.value = JSON.stringify(err.message, null, 4)
+        })
+    }
+
+    function adminDisableUser() {
+      var demo = document.getElementById('adminDisableUser')
+      var terminal = demo.querySelector('#terminal')
+
+      var userID = demo.querySelector('#userID').value
+      var message = demo.querySelector('#message').value
+      var expiry = demo.querySelector('#expiry').value
+
+      return skygear.auth.adminDisableUser(userID, message, expiry)
+        .then(function(res) {
+          terminal.value = JSON.stringify(res, null, 4)
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err.message, null, 4)
+        })
+    }
+
+    function adminEnableUser() {
+      var demo = document.getElementById('adminEnableUser')
+      var terminal = demo.querySelector('#terminal')
+
+      var userID = demo.querySelector('#userID').value
+      var message = demo.querySelector('#message').value
+      var expiry = demo.querySelector('#expiry').value
+
+      return skygear.auth.adminEnableUser(userID, message, expiry)
+        .then(function(res) {
+          terminal.value = JSON.stringify(res, null, 4)
+        })
+        .catch(function(err) {
+          terminal.value = JSON.stringify(err.message, null, 4)
         })
     }
   </script>
