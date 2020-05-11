@@ -67,4 +67,3 @@ describe('SkygearError', function () {
   });
 });
 /*eslint-enable camelcase */
-

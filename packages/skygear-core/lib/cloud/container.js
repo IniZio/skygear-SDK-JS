@@ -15,7 +15,7 @@
  */
 
 /* eslint camelcase: 0 */
-import _ from 'lodash';
+import _ from '../lodash';
 
 import Container, {USER_CHANGED} from '../container';
 

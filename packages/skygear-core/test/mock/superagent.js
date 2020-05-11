@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Fork from https://github.com/M6Web/superagent-mock
 
 /*eslint-disable no-unused-vars */
-import _ from 'lodash';
+import _ from '../../lib/lodash';
 import superagent from 'superagent';
 
 var configs = [];

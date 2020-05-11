@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import uuid from 'uuid';
-import _ from 'lodash';
+import _ from './lodash';
 import {toJSON, fromJSON} from './util';
 import ACL from './acl';
 

@@ -15,7 +15,7 @@
  */
 /* eslint camelcase: 0 */
 const request = require('superagent');
-const _ = require('lodash');
+const _ = require('./lodash');
 const ee = require('event-emitter');
 
 import Asset from './asset';

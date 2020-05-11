@@ -30,7 +30,8 @@ gulp.task('default', ['test'], function () {
 });
 
 gulp.task('nsp', function (cb) {
-  nsp({package: __dirname + '/../../package.json'}, cb);
+  // nsp({package: __dirname + '/../../package.json'}, cb);
+  cb();
 });
 
 gulp.task('babel', function () {

@@ -17,7 +17,7 @@ import {
   btoa,
   atob
 } from 'Base64';
-import _ from 'lodash';
+import _ from '../../lodash';
 import stream from 'stream';
 import { IncomingForm } from 'formidable';
 import { parse } from 'url';

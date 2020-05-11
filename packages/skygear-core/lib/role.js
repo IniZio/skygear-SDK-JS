@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import _ from 'lodash';
+import _ from './lodash';
 
 const definedRoles = {};
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import _ from 'lodash';
+import _ from './lodash';
 import md5 from 'md5';
 
 import {toJSON, fromJSON} from './util';

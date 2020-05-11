@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import _ from 'lodash';
+import _ from './lodash';
 import Asset from './asset';
 import Reference from './reference';
 import Geolocation from './geolocation';
@@ -32,12 +32,11 @@ export function toJSON(v) {
   } else if (v.toJSON) {
     return v.toJSON();
   } else if (_.isObject(v)) {
-    return _.chain(v)
-      .map((value, key) => {
-        return [key, toJSON(value)];
-      })
-      .fromPairs()
-      .value();
+    const json = {};
+    for (const prop in v) {
+      json[prop] = toJSON(v[prop]);
+    }
+    return json;
   } else {
     return v;
   }

@@ -15,7 +15,7 @@
  */
 /*eslint-disable no-new, camelcase */
 import {expect} from 'chai';
-import _ from 'lodash';
+import _ from '../lib/lodash';
 import User from '../lib/user';
 import Role from '../lib/role';
 
