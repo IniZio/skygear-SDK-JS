@@ -1,7 +1,6 @@
 {
-  "name": "skygear-inizio",
   "name": "skygear",
-  "version": "0.24.2",
+  "version": "0.24.2-kill-lodash",
   "description": "JS SDK of Skygear services",
   "homepage": "https://github.com/SkygearIO/skygear-SDK-JS",
   "repository": {
@@ -27,7 +26,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "skygear-core-inizio": "^0.24.2"
+    "skygear-core-inizio": "^0.24.2-kill-lodash"
   },
   "bugs": {
     "url": "https://github.com/SkygearIO/skygear-SDK-JS/issues"
