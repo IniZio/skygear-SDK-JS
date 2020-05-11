@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('skygear-core/dist/bin.js');
+require('skygear-core-inizio/dist/bin.js');

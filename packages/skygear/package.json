@@ -1,4 +1,5 @@
 {
+  "name": "skygear-inizio",
   "name": "skygear",
   "version": "0.24.2",
   "description": "JS SDK of Skygear services",
@@ -26,7 +27,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "skygear-core": "^0.24.2"
+    "skygear-core-inizio": "^0.24.2"
   },
   "bugs": {
     "url": "https://github.com/SkygearIO/skygear-SDK-JS/issues"
