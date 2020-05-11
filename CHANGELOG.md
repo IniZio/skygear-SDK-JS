@@ -1,3 +1,9 @@
+## 0.24.2-remove-lodash (2020-05-11)
+
+### Other Notes
+
+- Remove lodash dependency
+
 ## 0.24.2 (2017-08-30)
 
 ### Bug Fixes

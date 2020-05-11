@@ -1,1 +1,1 @@
-module.exports = require('skygear-core/dist/cloud/index.js');
+module.exports = require('skygear-core-inizio/dist/cloud/index.js');
