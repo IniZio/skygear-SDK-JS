@@ -1,1 +1,1 @@
-module.exports = require('skygear-core/dist/react-native/index.js');
+module.exports = require('skygear-core-inizio/dist/react-native/index.js');

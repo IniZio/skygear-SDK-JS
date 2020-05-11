@@ -1,1 +1,1 @@
-module.exports = require('skygear-core');
+module.exports = require('skygear-core-inizio');
